@@ -1,57 +1,57 @@
 class MediaController < ApplicationController
   
   require 'will_paginate/array'
-	before_filter :media_type, [:new]
+  before_filter :media_type, [:new]
 
-	def index 
-		@media = current_user.present? ? Media.where("user_id = ? or public = ?", current_user.id, true) : Media.where(public: true)
-		@media = @media.videos if @media_type == Media::Type::Video
-		@media = @media.images if @media_type == Media::Type::Image
-		if params[:search]
+  def index 
+    @media = current_user.present? ? Media.where("user_id = ? or public = ?", current_user.id, true) : Media.where(public: true)
+    @media = @media.videos if @media_type == Media::Type::Video
+    @media = @media.images if @media_type == Media::Type::Image
+    if params[:search]
       @media = @media.search(params[:search]).records.paginate(page: params[:page], per_page: 20)
-		else
-			@media = @media.paginate(page: params[:page], per_page: 20)
-		end
-	end
+    else
+      @media = @media.paginate(page: params[:page], per_page: 20)
+    end
+  end
 
-	def show
-		@media = Media.find_by_id(params[:id])
-	end
+  def show
+    @media = Media.find_by_id(params[:id])
+  end
 
-	def new
-		@medium = current_user.medias.new()
-	end
+  def new
+    @medium = current_user.medias.new()
+  end
 
-	def create
-	  @medium = current_user.medias.new(params[:media])
+  def create
+    @medium = current_user.medias.new(params[:media])
     if @medium && @medium.save
       redirect_to medium_path(@medium.id)
     else
-     	render 'new'
+      render 'new'
     end
-	end
+  end
 
-	def edit
-		@medium = Media.find_by_id(params[:id])
-	end
+  def edit
+    @medium = Media.find_by_id(params[:id])
+  end
 
-	def update
-		@medium = Media.find_by_id(params[:id])
+  def update
+    @medium = Media.find_by_id(params[:id])
     if @medium && @medium.update_attributes(params[:media])
       redirect_to medium_path(@medium.id)
     else
-     	render 'edit'
+      render 'edit'
     end
-	end
+  end
 
-	def destroy
-		Media.find(params[:id]).destroy
-		redirect_to root_path
-	end
+  def destroy
+    Media.find(params[:id]).destroy
+    redirect_to root_path
+  end
 
-	private
+  private
 
-	def media_type
-		@media_type = params[:media_type].to_i if params[:media_type].present?
-	end
+  def media_type
+    @media_type = params[:media_type].to_i if params[:media_type].present?
+  end
 end
