@@ -1,0 +1,18 @@
+<div class="row-fluid">
+	<div class ="col-sm-12"></div>
+		<div class ="col-sm-3"></div>
+		<div class ="col-sm-6">
+			<% @media.each do |media|%>
+			  <%= render partial: 'image', :locals => {image: media} if media.is_image? %>
+			  <%= render partial: 'video', :locals => {video: media} if media.is_video? %>
+			<% end %>
+			<%= will_paginate @media %>
+		</div>
+		<div class ="col-sm-3"></div>
+	</div>
+</div>
+
+
+<%= javascript_tag do %>
+	jQuery("#search").val("");
+<% end %>

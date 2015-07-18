@@ -1,0 +1,66 @@
+<div class="row-fluid">
+  <div class="col-sm-3"></div>
+  <div class= "col-sm-6 well">
+		<%= form_for @medium, :url => url_for(:action => action), html: {class: "form-horizontal"} do |f| %>
+		  <% @medium.errors.full_messages.each do |msg| %>
+      <li style="color: red"><%= msg %></li>
+   <% end %>
+		  <div class="control-group">
+			  <% unless @medium.id.present? %>
+			    <%= f.radio_button(:media_type, 0) %>
+			    <%= f.label(:media_type_0, "Image") %>
+			    <%= f.radio_button(:media_type, 1) %>
+			    <%= f.label(:media_type_1, "Video") %>
+			  <% end %>
+		  </div>
+		  <div class="control-group">
+			<%= f.label :name, class: 'control-label'%>
+			<div class='controls'>
+			<%= f.text_field :name ,required: true%>
+			</div>
+			</div>
+		  <div class="control-group">
+		    <%= f.label :description, class: 'control-label'%>
+		    <div class='controls'>
+			  <%= f.text_field :description, required: true, class: 'controls' %>
+			  </div>
+			</div>
+			<div class="control-group">
+		    <%= f.label :make_it_public, class: 'control-label'%>
+		    <div class='controls'>
+			  <%= f.check_box :public, checked_value: true, unchecked_value: false, class: 'controls' %>
+			  </div>
+			</div>
+			<div id="show_url">	
+			  <div class="control-group">
+			    <%= f.label :url, class: 'control-label'%>
+			    <div class='controls'>
+				  <%= f.text_field :url, class: 'controls'%>
+				  </div>
+				</div>
+			</div>
+			<div id="show_content">
+				<div class="control-group">
+				<%= f.label :upload_image, class: 'control-label'%>
+				<%= f.file_field :content, class: 'controls'%>
+				</div>
+			</div>
+			<div class="form-actions">
+			    <%= f.submit :class => "btn btn-primary has-above" %>
+			</div>
+		<% end %>
+	</div>
+</div>
+<%= javascript_tag do %>
+  jQuery(document).ready(function(){
+    Media.init("<%= @medium.media_type.nil?%>", "<%= @medium.media_type%>");
+    jQuery("#media_media_type_1").on("change", function(){
+      jQuery("#show_url").show();
+      jQuery("#show_content").hide();
+    });
+    jQuery("#media_media_type_0").on("change", function(){
+      jQuery("#show_content").show();
+      jQuery("#show_url").hide();
+    });
+  });
+<% end %>

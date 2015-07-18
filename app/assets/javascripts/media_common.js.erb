@@ -1,0 +1,23 @@
+var Media = {
+	init: function(arg1, arg2) {
+		if(arg1 === 'true')
+    	{ 
+			jQuery("#show_content").hide();
+    		jQuery("#show_url").hide();
+    		return;
+		}
+		if(arg2 == 0)
+		{  
+			jQuery("#show_content").show();
+            jQuery("#show_url").hide();
+		}
+		else if (arg2 == 1)
+		{
+            jQuery("#show_content").hide();
+            jQuery("#show_url").show();
+		}
+		else{
+			
+    	}
+	}
+};

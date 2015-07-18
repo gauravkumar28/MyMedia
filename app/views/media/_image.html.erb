@@ -1,0 +1,5 @@
+<div class = "col-mx-6 has-above-15">
+  <div><strong> Name: <%= link_to image.name, medium_path(image) %></strong></div>
+  <div><strong> Description: <%= image.description %></strong></div>
+  <%= link_to image_tag(image.content.url), medium_path(image), height: 200, width: 150 %>
+</div>

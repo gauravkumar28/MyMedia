@@ -1,0 +1,25 @@
+<div class="row-fluid">
+  <div class="col-sm-3"></div>
+  <div class="col-sm-6">
+     <div><strong> Name: <%= @media.name %></strong></div>
+     <div><strong>Description: <%= @media.description %></strong></div>
+     <div>
+	     <% if @media.is_video? %>
+	     <iframe width="400" height="300" src="<%= "http://www.youtube.com/embed/#{@media.video_id}" %>"></iframe>
+	     <% end %>
+	     <% if @media.is_image? %>
+	     <%= image_tag @media.content.url %>
+	     <% end %>
+	  </div>
+  </div>
+  <div class="col-sm-3">
+    <% if @media.user == current_user %>  
+	    <div class="col-sm-3">
+		    <%= button_to "edit", edit_medium_path(@media), method: :get, class: "btn btn-primary" %>
+		  </div>
+		  <div class="col-sm-3">
+		    <%= button_to "delete", medium_path, method: :delete, class: "btn btn-primary" %>
+		  </div>
+    <% end %>
+	</div>
+</div>
